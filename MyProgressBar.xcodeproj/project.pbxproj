@@ -15,6 +15,9 @@
 		FF0FC1521C955E4800316A6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF0FC1501C955E4800316A6D /* LaunchScreen.storyboard */; };
 		FF0FC15D1C955E4900316A6D /* MyProgressBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FC15C1C955E4900316A6D /* MyProgressBarTests.m */; };
 		FF0FC1681C955E4900316A6D /* MyProgressBarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FC1671C955E4900316A6D /* MyProgressBarUITests.m */; };
+		FF99D77A1C95BC0800EA4BCF /* MyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF99D7791C95BC0800EA4BCF /* MyProgressView.m */; };
+		FFB766FA1C9646C50096996E /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB766F91C9646C50096996E /* TestView.m */; };
+		FFB766FC1C96838E0096996E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB766FB1C96838E0096996E /* test.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,11 @@
 		FF0FC1631C955E4900316A6D /* MyProgressBarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyProgressBarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF0FC1671C955E4900316A6D /* MyProgressBarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyProgressBarUITests.m; sourceTree = "<group>"; };
 		FF0FC1691C955E4900316A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF99D7781C95BC0800EA4BCF /* MyProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressView.h; sourceTree = "<group>"; };
+		FF99D7791C95BC0800EA4BCF /* MyProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressView.m; sourceTree = "<group>"; };
+		FFB766F81C9646C50096996E /* TestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
+		FFB766F91C9646C50096996E /* TestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
+		FFB766FB1C96838E0096996E /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,7 @@
 		FF0FC1411C955E4800316A6D /* MyProgressBar */ = {
 			isa = PBXGroup;
 			children = (
+				FF99D7771C95BB7200EA4BCF /* MyProgressView */,
 				FF0FC1451C955E4800316A6D /* AppDelegate.h */,
 				FF0FC1461C955E4800316A6D /* AppDelegate.m */,
 				FF0FC1481C955E4800316A6D /* ViewController.h */,
@@ -109,6 +118,8 @@
 				FF0FC14E1C955E4800316A6D /* Assets.xcassets */,
 				FF0FC1501C955E4800316A6D /* LaunchScreen.storyboard */,
 				FF0FC1531C955E4800316A6D /* Info.plist */,
+				FFB766F81C9646C50096996E /* TestView.h */,
+				FFB766F91C9646C50096996E /* TestView.m */,
 				FF0FC1421C955E4800316A6D /* Supporting Files */,
 			);
 			path = MyProgressBar;
@@ -117,6 +128,7 @@
 		FF0FC1421C955E4800316A6D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FFB766FB1C96838E0096996E /* test.png */,
 				FF0FC1431C955E4800316A6D /* main.m */,
 			);
 			name = "Supporting Files";
@@ -138,6 +150,15 @@
 				FF0FC1691C955E4900316A6D /* Info.plist */,
 			);
 			path = MyProgressBarUITests;
+			sourceTree = "<group>";
+		};
+		FF99D7771C95BB7200EA4BCF /* MyProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				FF99D7781C95BC0800EA4BCF /* MyProgressView.h */,
+				FF99D7791C95BC0800EA4BCF /* MyProgressView.m */,
+			);
+			path = MyProgressView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +267,7 @@
 				FF0FC1521C955E4800316A6D /* LaunchScreen.storyboard in Resources */,
 				FF0FC14F1C955E4800316A6D /* Assets.xcassets in Resources */,
 				FF0FC14D1C955E4800316A6D /* Main.storyboard in Resources */,
+				FFB766FC1C96838E0096996E /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +293,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF0FC14A1C955E4800316A6D /* ViewController.m in Sources */,
+				FF99D77A1C95BC0800EA4BCF /* MyProgressView.m in Sources */,
+				FFB766FA1C9646C50096996E /* TestView.m in Sources */,
 				FF0FC1471C955E4800316A6D /* AppDelegate.m in Sources */,
 				FF0FC1441C955E4800316A6D /* main.m in Sources */,
 			);
@@ -496,6 +520,7 @@
 				FF0FC16E1C955E4900316A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF0FC16F1C955E4900316A6D /* Build configuration list for PBXNativeTarget "MyProgressBarTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +529,7 @@
 				FF0FC1711C955E4900316A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF0FC1721C955E4900316A6D /* Build configuration list for PBXNativeTarget "MyProgressBarUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +538,7 @@
 				FF0FC1741C955E4900316A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
