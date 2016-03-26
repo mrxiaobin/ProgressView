@@ -7,18 +7,14 @@
 //
 
 #import "MyProgressView.h"
-#define DEFAULTPROGRESSBARHEIGHT 10
+#define PROGRESSBARHEIGHT 20
+#define PROGRESSLINEHEIGHT 5
 
-/**
- *  注意，如果想要进度条随着父视图的frame变化而变化，一定要重写父视图的layoutSubviews方法，在该方法中设置进度条的位置，
- *  否则父视图大小发生变化时，进度条的frame不会随之而变，具体请参考TestView中的调用方法。
- */
 @interface MyProgressView()
 
-@property (nonatomic, assign, readonly) CGFloat progressBarH;
-@property (nonatomic, assign, readonly) CGFloat slidePointR;
-@property (nonatomic, strong) UIBezierPath *progressPath;
-@property (nonatomic, strong) NSMutableArray *paths;
+@property (nonatomic, strong) UIBezierPath *progressPath;//进度条已走部分
+@property (nonatomic, strong) UIBezierPath *progressPathRight;//进度条剩余部分
+@property (nonatomic, strong) NSMutableArray *paths; //要打的点
 @property (nonatomic, strong) NSMutableArray *points;
 @property (nonatomic, strong)UIButton *slidePointBtn; // 拖动的点
 
@@ -47,8 +43,10 @@
     if (!_slidePointBtn) {
         _slidePointBtn = [[UIButton alloc]init];
         _slidePointBtn.enabled = NO;
-        _slidePointBtn.layer.cornerRadius = _slidePointR;
-        [_slidePointBtn setBackgroundColor:[UIColor redColor]];
+        _slidePointBtn.layer.cornerRadius = PROGRESSBARHEIGHT * 0.5;
+        _slidePointBtn.layer.borderWidth = 0.3;
+        _slidePointBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        [_slidePointBtn setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:_slidePointBtn];
     }
     return _slidePointBtn;
@@ -62,26 +60,11 @@
  *  @return 返回初始化的进度条
  */
 -(instancetype)initWithFrame:(CGRect)frame {
+    frame.size.height = PROGRESSBARHEIGHT;
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor grayColor];
-        _progressBarH = frame.size.height;
-        _slidePointR = _progressBarH * 1.2;
-    }
-    return self;
-}
-
-/**
- *  用默认的大小初始化进度条
- *
- *  @return 返回初始化的进度条
- */
--(instancetype)init {
-    self = [super init];
-    if (self) {
-        self.backgroundColor = [UIColor grayColor];
-        _progressBarH = DEFAULTPROGRESSBARHEIGHT;
-        _slidePointR = _progressBarH * 1.2;
+        self.backgroundColor = [UIColor clearColor];
+        self.progress = 0;
     }
     return self;
 }
@@ -98,8 +81,8 @@
     for (int i = 0; i < _points.count; i++) {
         NSDictionary *dic = _points[i];
         CGFloat progress = [[dic objectForKey:@"progress"] floatValue];
-        CGFloat x = (self.frame.size.width - _slidePointR * 2) * progress;
-        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, 0, _progressBarH, _progressBarH)];
+        CGFloat x = (self.frame.size.width - PROGRESSBARHEIGHT - PROGRESSLINEHEIGHT) * progress + PROGRESSBARHEIGHT * 0.5;
+        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, (PROGRESSBARHEIGHT - PROGRESSLINEHEIGHT) * 0.5, PROGRESSLINEHEIGHT, PROGRESSLINEHEIGHT)];
         [self.paths addObject:path];
     }
 }
@@ -112,56 +95,77 @@
         _progress = 0;
     }
     CGRect frame = self.slidePointBtn.frame;
-    frame.origin.x = (self.frame.size.width - _slidePointR * 2) * _progress;
+    frame.origin.x = (self.frame.size.width - PROGRESSBARHEIGHT) * _progress;
     _slidePointBtn.frame = frame;
-    
+    [self dragToChangeProgress];
     [self drawToProgress:_progress];
 }
 
 -(void)drawToProgress:(CGFloat)progress {
     UIBezierPath *path = [UIBezierPath bezierPath];
     _progressPath = path;
-    [path moveToPoint:CGPointMake(0, _progressBarH * 0.5)];
-    CGFloat x = (self.frame.size.width - _slidePointR) * _progress;
-    [_progressPath addLineToPoint:CGPointMake(x, _progressBarH * 0.5)];
+    [path moveToPoint:CGPointMake(PROGRESSBARHEIGHT * 0.5, PROGRESSBARHEIGHT * 0.5)];
+    CGFloat x = (self.frame.size.width - PROGRESSLINEHEIGHT * 0.5) * _progress;
+    [_progressPath addLineToPoint:CGPointMake(x, PROGRESSBARHEIGHT * 0.5)];
+    
+    UIBezierPath *path1 = [UIBezierPath bezierPath];
+    _progressPathRight = path1;
+    [path1 moveToPoint:CGPointMake(x, PROGRESSBARHEIGHT * 0.5)];
+    [_progressPathRight addLineToPoint:CGPointMake(self.frame.size.width - PROGRESSBARHEIGHT * 0.5, PROGRESSBARHEIGHT * 0.5)];
+    
     [self setNeedsDisplay];
 }
 
 - (CGPoint)pointWithTouches:(NSSet *)touches
 {
     UITouch *touch = [touches anyObject];
+    CGPoint pos = [touch locationInView:self];
+    pos.x -= PROGRESSBARHEIGHT * 0.5;
     
-    return [touch locationInView:self];
+    return pos;
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     CGPoint pos = [self pointWithTouches:touches];
-    self.progress = pos.x / self.frame.size.width;
+    
+    self.progress = pos.x / (self.frame.size.width - PROGRESSBARHEIGHT);
+    [self dragToChangeProgress];
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     CGPoint pos = [self pointWithTouches:touches];
 
-    self.progress = pos.x / self.frame.size.width;
+    self.progress = pos.x / (self.frame.size.width - PROGRESSBARHEIGHT);
+    [self dragToChangeProgress];
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+-(void)dragToChangeProgress {
+    if ([self.delegate respondsToSelector:@selector(myProgressViewdidChange:)]) {
+        [self.delegate myProgressViewdidChange:self];
+    }
+}
 
 -(void)layoutSubviews {
     [super layoutSubviews];
-    self.slidePointBtn.frame = CGRectMake((self.frame.size.width - _slidePointR * 2) * _progress, _progressBarH * 0.5  - _slidePointR, _slidePointR * 2, _slidePointR * 2);
+    self.slidePointBtn.frame = CGRectMake((self.frame.size.width - PROGRESSBARHEIGHT) * _progress, 0, PROGRESSBARHEIGHT, PROGRESSBARHEIGHT);
     [self drawPointsWithPoints:_points];
     [self drawToProgress:_progress];
 }
 
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    _progressPath.lineWidth = _progressBarH;
-    
-    [[UIColor greenColor] set];
+    //绘制进度条已走的部分颜色
+    _progressPath.lineWidth = PROGRESSLINEHEIGHT;
+    [[UIColor lightGrayColor] set];
     [_progressPath stroke];
     
-    // 遍历所有的点路径绘制
+    //绘制进度条剩余部分颜色
+    _progressPathRight.lineWidth = PROGRESSLINEHEIGHT;
+    [[UIColor darkGrayColor] set];
+    [_progressPathRight stroke];
+    
+    // 遍历所有要打的点路径绘制
     for (int i = 0; i < self.paths.count; i++) {
         UIBezierPath *path = (UIBezierPath*)self.paths[i];
         NSDictionary *pointDic = self.points[i];
@@ -170,6 +174,5 @@
         [path fill];
     }
 }
-
 
 @end

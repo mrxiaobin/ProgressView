@@ -16,7 +16,6 @@
 		FF0FC15D1C955E4900316A6D /* MyProgressBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FC15C1C955E4900316A6D /* MyProgressBarTests.m */; };
 		FF0FC1681C955E4900316A6D /* MyProgressBarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FC1671C955E4900316A6D /* MyProgressBarUITests.m */; };
 		FF99D77A1C95BC0800EA4BCF /* MyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF99D7791C95BC0800EA4BCF /* MyProgressView.m */; };
-		FFB766FA1C9646C50096996E /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB766F91C9646C50096996E /* TestView.m */; };
 		FFB766FC1C96838E0096996E /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB766FB1C96838E0096996E /* test.png */; };
 /* End PBXBuildFile section */
 
@@ -56,8 +55,6 @@
 		FF0FC1691C955E4900316A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF99D7781C95BC0800EA4BCF /* MyProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressView.h; sourceTree = "<group>"; };
 		FF99D7791C95BC0800EA4BCF /* MyProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressView.m; sourceTree = "<group>"; };
-		FFB766F81C9646C50096996E /* TestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
-		FFB766F91C9646C50096996E /* TestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
 		FFB766FB1C96838E0096996E /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,8 +115,6 @@
 				FF0FC14E1C955E4800316A6D /* Assets.xcassets */,
 				FF0FC1501C955E4800316A6D /* LaunchScreen.storyboard */,
 				FF0FC1531C955E4800316A6D /* Info.plist */,
-				FFB766F81C9646C50096996E /* TestView.h */,
-				FFB766F91C9646C50096996E /* TestView.m */,
 				FF0FC1421C955E4800316A6D /* Supporting Files */,
 			);
 			path = MyProgressBar;
@@ -294,7 +289,6 @@
 			files = (
 				FF0FC14A1C955E4800316A6D /* ViewController.m in Sources */,
 				FF99D77A1C95BC0800EA4BCF /* MyProgressView.m in Sources */,
-				FFB766FA1C9646C50096996E /* TestView.m in Sources */,
 				FF0FC1471C955E4800316A6D /* AppDelegate.m in Sources */,
 				FF0FC1441C955E4800316A6D /* main.m in Sources */,
 			);

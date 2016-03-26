@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MyProgressView;
+@protocol MyProgressViewDelegate <NSObject>
+@required
+-(void)myProgressViewdidChange:(MyProgressView*)myProgressView;
+@end
 
 @interface MyProgressView : UIView
 
@@ -14,6 +19,7 @@
  *  进度条的进度 0 - 1 之间
  */
 @property (nonatomic, assign)CGFloat progress;
+@property (nonatomic, weak)id <MyProgressViewDelegate> delegate;
 
 /**
  *  在进度条上打点
@@ -21,6 +27,7 @@
  *  @param progress 打点位置(0 - 1)
  *  @param color    点的颜色
  */
+
 -(void)makePointWithprogress:(CGFloat)progress andColor:(UIColor*)color;
 
 @end
